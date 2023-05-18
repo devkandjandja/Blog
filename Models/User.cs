@@ -1,6 +1,8 @@
-// See https://aka.ms/new-console-template for more information
+
+using Dapper.Contrib.Extensions;
 namespace Blog.Models
 {
+    [Table("[User]")]
    public class User
     {   
         public int Id {get; set;}
