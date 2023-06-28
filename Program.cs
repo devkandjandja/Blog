@@ -7,17 +7,14 @@ namespace Blog
 {
     class Program
     {
-        private const string CONNECTION_STRING = @"server=localhost,1433; database=Blog; User ID=sa; Password=1q2w3e4r@#$;  trust server certificate=true";
+        private const string CONNECTION_STRING = @"server=localhost,1433; database=Blog; User ID=sa; Password=1q2w3e4r@#$; trust server certificate=true";
 
         static void Main(string[] args)
         {
             var connection = new SqlConnection(CONNECTION_STRING);
             connection.Open();
-            //ReadUsers();
-            //ReadUser();
-            //CreateUser();
-            //UpDateUser();
-            //DeleteUser();
+            ReadUsers(connection);
+            ReadRoles(connection);            
             connection.Close();
         }
         public static void ReadUsers(SqlConnection connection)
@@ -26,64 +23,16 @@ namespace Blog
             var users = repository.Get();
                 
                 foreach(var user in users)
-                {
-                    Console.WriteLine(user.Nome);
-                }
-            }
+                   Console.WriteLine(user.Nome);
         }
-        public static void ReadUser(SqlConnection connection)
+        
+        public static void ReadRoles(SqlConnection connection)
         {
-            using(var connetion = new SqlConnection(CONNECTION_STRING))
-            {
-                var  user = connetion.Get<User>(1);
-                Console.WriteLine(user.Nome);
-                //Console.WriteLine(user.Email);
-            }
-        }
+           var repository = new RoleRepository(connection);
+           var roles = repository.Get();
 
-        public static void CreateUser()
-        {
-            var user = new User()
-            {
-                Nome= "Laurindo",
-                Email = "alberto@gmail.com",
-                PasswordHash= "nada ",
-                Bio = "Equipa_balta.io", 
-                Image= "https:blog.com",
-                Slug="suporte@@tecnica-balta.io"
-            };
-            using(var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                connection.Insert<User>(user);
-                Console.WriteLine("Cadastro efetuado com sucesso.");
-            }
-        }
-        public static void UpDateUser()
-        {
-            var user = new User()
-            {
-                Id = 3,               
-                Nome= "Alberto Kandjandja",
-                Email = "Alberto@gmail.com",
-                PasswordHash= "hash",
-                Bio = "Equipa kandjandja.io", 
-                Image= "https//:kandjandja.blog.com",
-                Slug="suporte-tecnica-kandjandja.io"  
-            };
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                connection.Update<User>(user);
-                Console.WriteLine("Dados de usuarios atuliza com sucesso.");           
-            }
-        }
-        public static void DeleteUser()
-        {
-            using(var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                var user = connection.Get<User>(2);
-                connection.Delete<User>(user);
-                Console.WriteLine("Usuario deletado com sucesso");
-            }
+           foreach(var role in roles)
+                Console.WriteLine(role.Nome);
         }
     }
 }
