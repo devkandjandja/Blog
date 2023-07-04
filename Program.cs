@@ -1,5 +1,6 @@
 ﻿using Blog.Models;
 using Blog.Repositories;
+using Blog.Screens.TagScreens;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 
@@ -12,53 +13,37 @@ namespace Blog
         {
             var connection = new SqlConnection(CONNECTION_STRING);
             connection.Open();
-            ReadUsers(connection);
-            ReadRoles(connection);   
-            ReadTags(connection);                  
+
+                Load();
+
+            Console.ReadKey();                 
             connection.Close();
         }
-        public static void ReadUsers(SqlConnection connection)
+
+        public static void Load()
         {
-            var repository = new Repositorio<User>(connection);
-            var itens = repository.Get();
-                
-                foreach(var item in itens)
-                {   
-                 Console.WriteLine(item.Nome);
-                 foreach(var role in item.Roles)
-                   Console.WriteLine($" - {role.Nome}");
-                }
-        }    
+            Console.WriteLine("Meu blog");
+            Console.WriteLine("-----------------------");
+            Console.WriteLine();
+            Console.WriteLine("O que deseja fazer");
+            Console.WriteLine();
+            Console.WriteLine("1 - Gestao de usuario");
+            Console.WriteLine("2 - Gestao de perfil");
+            Console.WriteLine("3 - Gestao de categoria");
+            Console.WriteLine("4 - Gestao de tag");
+            Console.WriteLine("5 - Vincular perfil/usuario");
+            Console.WriteLine("6 - Vincular post/tag");
+            Console.WriteLine("7 - Relatorios");
+            Console.WriteLine();
+            var opcion = short.Parse(Console.ReadLine()!);
 
-        public static void ReadUsersWithRoles(SqlConnection connection)
-        {
-            var repository = new UseRepositorio(connection);
-            var items = repository.GetWithRoles();
+            switch(opcion)
+            {
+                case 4:
+                MenuTagScreens.Load();
+                break;
+            }
 
-             foreach(var item in items)
-                {   
-                 Console.WriteLine(item.Nome);
-                 foreach(var role in item.Roles)
-                   Console.WriteLine($" - {role.Nome}");
-                }
-
-        }    
-        public static void ReadRoles(SqlConnection connection)
-        {
-           var repository = new Repositorio<Role>(connection);
-           var items = repository.Get();
-
-           foreach(var item in items)
-             Console.WriteLine(item.Nome);              
-              
-        }
-        public static void ReadTags(SqlConnection connection)
-        {
-            var repository = new Repositorio<Tag>(connection);
-            var items = repository.Get();
-
-            foreach(var item in items)
-            Console.WriteLine(item.Nome);
-        }       
+        }             
     }
 }
