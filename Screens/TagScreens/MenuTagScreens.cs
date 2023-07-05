@@ -16,9 +16,9 @@ namespace Blog.Screens.TagScreens
             Console.WriteLine();
             Console.WriteLine();
 
-            var opcion = short.Parse(Console.ReadLine()!);
+            var option = short.Parse(Console.ReadLine()!);
 
-            switch(opcion)
+            switch(option)
             {
                 case 1:
                 ListTagScreens.Load();

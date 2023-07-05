@@ -1,7 +1,4 @@
-﻿using Blog.Models;
-using Blog.Repositories;
-using Blog.Screens.TagScreens;
-using Dapper.Contrib.Extensions;
+﻿using Blog.Screens.TagScreens;
 using Microsoft.Data.SqlClient;
 
 namespace Blog
@@ -11,16 +8,16 @@ namespace Blog
         private const string CONNECTION_STRING = @"server=localhost,1433; database=Blog; User ID=sa; Password=1q2w3e4r@#$; trust server certificate=true";
         static void Main(string[] args)
         {
-            var connection = new SqlConnection(CONNECTION_STRING);
-            connection.Open();
+           Database.Connection = new SqlConnection(CONNECTION_STRING);
+           Database.Connection.Open();
 
                 Load();
 
             Console.ReadKey();                 
-            connection.Close();
+            Database.Connection.Close();
         }
 
-        public static void Load()
+        private static void Load()
         {
             Console.WriteLine("Meu blog");
             Console.WriteLine("-----------------------");
@@ -35,13 +32,14 @@ namespace Blog
             Console.WriteLine("6 - Vincular post/tag");
             Console.WriteLine("7 - Relatorios");
             Console.WriteLine();
-            var opcion = short.Parse(Console.ReadLine()!);
+            var option = short.Parse(Console.ReadLine()!);
 
-            switch(opcion)
+            switch(option)
             {
                 case 4:
                 MenuTagScreens.Load();
                 break;
+                default: Load(); break;
             }
 
         }             
