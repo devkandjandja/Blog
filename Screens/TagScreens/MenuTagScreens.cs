@@ -9,10 +9,10 @@ namespace Blog.Screens.TagScreens
             Console.WriteLine();
             Console.WriteLine("------------------------");
             Console.WriteLine();
-            Console.WriteLine("Listar tag");
-            Console.WriteLine("Cadastrar tag");
-            Console.WriteLine("Atualizar tag");
-            Console.WriteLine("Excluir tag");
+            Console.WriteLine("1 - Listar tag");
+            Console.WriteLine("2 - Cadastrar tag");
+            Console.WriteLine("3 - Atualizar tag");
+            Console.WriteLine("4 - Excluir tag");
             Console.WriteLine();
             Console.WriteLine();
 
